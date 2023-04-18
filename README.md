@@ -5,7 +5,22 @@
 [![Coverage](https://tcarreira.github.io/api-server/coverage/badge.svg)](https://tcarreira.github.io/api-server/coverage/coverage.html)
 [![GitHub](https://img.shields.io/github/license/tcarreira/api-server)](https://github.com/tcarreira/api-server/blob/main/LICENSE)
 
-A simple demo api server + api Client for CRUD demos
+A simple demo api server + api Client for CRUD demos (fully in-memory, no dependencies)
+
+# Server
+
+Download the latest version at https://github.com/tcarreira/api-server/releases/latest
+
+or
+
+Install it from source
+
+```sh
+go install github.com/tcarreira/api-server@latest
+api-server --version
+API_PORT=8888 api-server  # start server, listening on a non-default port
+```
+
 
 
 # Types
@@ -31,4 +46,3 @@ A simple demo api server + api Client for CRUD demos
 | `/pets/:id` | GET | Get a pet by ID |
 | `/pets/:id` | PUT | Update a pet by ID |
 | `/pets/:id` | DELETE | Delete a pet by ID |
-

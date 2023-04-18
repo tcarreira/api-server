@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"net/http"
 	"os"
@@ -17,8 +18,17 @@ var (
 )
 
 func main() {
+	verInfo := fmt.Sprintf("api-server version: %s (commit=%s, date=%s)", Version, commit, date)
+	flagVersion := flag.Bool("version", false, "Print version information and quit")
+	flag.Parse()
+	if *flagVersion {
+		fmt.Println(verInfo)
+		os.Exit(0)
+	}
+
 	// Echo instance
 	e := echo.New()
+	e.HideBanner = true
 
 	// Middleware
 	e.Use(middleware.Logger())
@@ -32,10 +42,12 @@ func main() {
 		return c.String(http.StatusOK, fmt.Sprintln(Version, commit, date))
 	})
 
-	// Start server
 	port := "8888"
 	if p := os.Getenv("API_PORT"); p != "" {
 		port = p
 	}
+
+	// Start server
+	fmt.Println(verInfo)
 	e.Logger.Fatal(e.Start(":" + port))
 }
