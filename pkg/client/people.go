@@ -15,7 +15,7 @@ func (c *APIClient) People() *peopleClient {
 	return &peopleClient{c}
 }
 
-func (c *peopleClient) Create(p types.Person) (*types.Person, error) {
+func (c *peopleClient) Create(p *types.Person) (*types.Person, error) {
 	data, err := c.client.DoPOST("/people", p)
 	if err != nil {
 		return nil, err
@@ -54,7 +54,7 @@ func (c *peopleClient) List() ([]*types.Person, error) {
 	return people, nil
 }
 
-func (c *peopleClient) Update(id int, p types.Person) (*types.Person, error) {
+func (c *peopleClient) Update(id int, p *types.Person) (*types.Person, error) {
 	data, err := c.client.DoPUT("/people/"+strconv.Itoa(id), p)
 	if err != nil {
 		return nil, err

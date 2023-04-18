@@ -26,12 +26,12 @@ func TestPeopleCreate(t *testing.T) {
 		Age:         25,
 		Description: "A nice bob",
 	}
-	p1, err := cli.People().Create(expected1)
+	p1, err := cli.People().Create(&expected1)
 	assert.NoError(t, err)
 	assert.Equal(t, 1, len(db.People))
 	assert.Equal(t, expected1, *p1)
 	assert.Equal(t, expected1, db.People[0])
-	p2, err := cli.People().Create(expected2)
+	p2, err := cli.People().Create(&expected2)
 	assert.NoError(t, err)
 	assert.Equal(t, 2, len(db.People))
 	expected2.ID = 1
@@ -93,12 +93,12 @@ func TestPeopleUpdate(t *testing.T) {
 		Age:         30,
 		Description: "A nice guy",
 	}
-	p, err := cli.People().Update(expected.ID, expected)
+	p, err := cli.People().Update(expected.ID, &expected)
 	assert.NoError(t, err)
 	assert.Equal(t, expected, *p)
 	assert.Equal(t, expected, db.People[0])
 
-	_, err = cli.People().Update(88, expected)
+	_, err = cli.People().Update(88, &expected)
 	assert.ErrorIs(t, err, ErrorNotFound)
 }
 
