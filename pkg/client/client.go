@@ -124,10 +124,6 @@ func (c *APIClient) DoPUT(path string, data interface{}) ([]byte, error) {
 		return nil, ErrorNotFound
 	}
 
-	if resp.StatusCode == http.StatusNotFound {
-		return nil, ErrorNotFound
-	}
-
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err

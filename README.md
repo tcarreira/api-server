@@ -1,5 +1,10 @@
 # api server
 
+![Go Version](https://img.shields.io/github/go-mod/go-version/tcarreira/api-server)
+[![Actions Status](https://github.com/tcarreira/api-server/workflows/Go/badge.svg)](https://github.com/tcarreira/api-server/actions)
+[![Coverage](https://tcarreira.github.io/api-server/coverage/badge.svg)](https://tcarreira.github.io/api-server/coverage/coverage.html)
+[![GitHub](https://img.shields.io/github/license/tcarreira/api-server)](https://github.com/tcarreira/api-server/blob/main/LICENSE)
+
 A simple demo api server + api Client for CRUD demos
 
 
@@ -15,6 +20,7 @@ A simple demo api server + api Client for CRUD demos
 | --- | --- | --- |
 | `/` | GET | "ok" |
 | `/status` | GET | server config info |
+| `/version` | GET | info about version (built) |
 | `/people` | POST | Create a person |
 | `/people` | GET | List all people |
 | `/people/:id` | GET | Get a person by ID |
