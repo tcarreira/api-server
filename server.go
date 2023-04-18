@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"runtime/debug"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -12,13 +13,22 @@ import (
 )
 
 var (
-	Version = "dev"
-	commit  = ""
-	date    = ""
+	Version = ""
 )
 
+func init() {
+	if Version == "" {
+		if bi, ok := debug.ReadBuildInfo(); ok && bi.Main.Version != "(devel)" {
+			Version = bi.Main.Version
+		}
+	}
+	if Version == "" {
+		Version = "dev"
+	}
+}
+
 func main() {
-	verInfo := fmt.Sprintf("api-server version: %s (commit=%s, date=%s)", Version, commit, date)
+	verInfo := fmt.Sprintf("api-server version: %s", Version)
 	flagVersion := flag.Bool("version", false, "Print version information and quit")
 	flag.Parse()
 	if *flagVersion {
@@ -39,7 +49,7 @@ func main() {
 		return c.String(http.StatusOK, "ok")
 	})
 	e.GET("/version", func(c echo.Context) error {
-		return c.String(http.StatusOK, fmt.Sprintln(Version, commit, date))
+		return c.String(http.StatusOK, verInfo)
 	})
 
 	port := "8888"

@@ -18,7 +18,7 @@ builds:
   flags:
   - -trimpath
   ldflags:
-  - -s -w -X main.Version={{.Version}} -X main.commit={{.Commit}} -X main.date={{ .CommitDate }}
+  - -s -w -X main.Version={{.Version}}
 
 # Archive customization
 archives:
