@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-
-	"github.com/labstack/echo/v4"
 )
 
 type APIClient struct {
@@ -41,8 +39,8 @@ func newRequest(method, path string, body io.Reader) (*http.Request, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
-	req.Header.Set(echo.HeaderAccept, echo.MIMEApplicationJSON)
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", "api-client-go:v0")
 	return req, nil
 }
