@@ -15,17 +15,18 @@ func (c *APIClient) Pet() *petsClient {
 	return &petsClient{c}
 }
 
-func (c *petsClient) Create(p *types.Pet) (*types.Pet, error) {
+func (c *petsClient) Create(p *types.Pet) error {
 	data, err := c.client.DoPOST("/pets", p)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	var pet types.Pet
 	err = json.Unmarshal(data, &pet)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return &pet, nil
+	p.ID = pet.ID // update the ID with server info
+	return nil
 }
 
 func (c *petsClient) Get(id int) (*types.Pet, error) {
@@ -54,17 +55,18 @@ func (c *petsClient) List() ([]*types.Pet, error) {
 	return pets, nil
 }
 
-func (c *petsClient) Update(id int, p *types.Pet) (*types.Pet, error) {
+func (c *petsClient) Update(id int, p *types.Pet) error {
 	data, err := c.client.DoPUT("/pets/"+strconv.Itoa(id), p)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	var pet types.Pet
 	err = json.Unmarshal(data, &pet)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return &pet, nil
+	p.ID = pet.ID // update the ID with server info
+	return nil
 }
 
 func (c *petsClient) Delete(id int) error {

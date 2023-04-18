@@ -15,17 +15,18 @@ func (c *APIClient) People() *peopleClient {
 	return &peopleClient{c}
 }
 
-func (c *peopleClient) Create(p *types.Person) (*types.Person, error) {
+func (c *peopleClient) Create(p *types.Person) error {
 	data, err := c.client.DoPOST("/people", p)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	var person types.Person
 	err = json.Unmarshal(data, &person)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return &person, nil
+	p.ID = person.ID // update the ID with server info
+	return nil
 }
 
 func (c *peopleClient) Get(id int) (*types.Person, error) {
@@ -54,17 +55,18 @@ func (c *peopleClient) List() ([]*types.Person, error) {
 	return people, nil
 }
 
-func (c *peopleClient) Update(id int, p *types.Person) (*types.Person, error) {
+func (c *peopleClient) Update(id int, p *types.Person) error {
 	data, err := c.client.DoPUT("/people/"+strconv.Itoa(id), p)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	var person types.Person
 	err = json.Unmarshal(data, &person)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return &person, nil
+	p.ID = person.ID // update the ID with server info
+	return nil
 }
 
 func (c *peopleClient) Delete(id int) error {
